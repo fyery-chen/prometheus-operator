@@ -321,6 +321,8 @@ type PrometheusSpec struct {
 	// and metric that is user created. The label value will always be the namespace of the object that is
 	// being created.
 	EnforcedNamespaceLabel string `json:"enforcedNamespaceLabel,omitempty"`
+	//Use the host's network namespace. If this option is set, the ports that will be used must be specified
+	HostNetwork bool `json:"hostNetwork,omitempty"`
 }
 
 // ArbitraryFSAccessThroughSMsConfig enables users to configure, whether
@@ -993,6 +995,8 @@ type AlertmanagerSpec struct {
 	// Port name used for the pods and governing service.
 	// This defaults to web
 	PortName string `json:"portName,omitempty"`
+	//Use the host's network namespace. If this option is set, the ports that will be used must be specified.
+	HostNetwork bool `json:"hostNetwork,omitempty"`
 }
 
 // AlertmanagerList is a list of Alertmanagers.

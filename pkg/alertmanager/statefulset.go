@@ -357,6 +357,14 @@ func makeStatefulSetSpec(a *monitoringv1.Alertmanager, config Config) (*appsv1.S
 				Protocol:      v1.ProtocolTCP,
 			},
 		}, ports...)
+
+		if a.Spec.HostNetwork {
+			for i := range ports {
+				if ports[i].HostPort == 0 {
+					ports[i].HostPort = ports[i].ContainerPort
+				}
+			}
+		}
 	}
 
 	// Adjust Alertmanager command line args to specified AM version
@@ -543,6 +551,7 @@ func makeStatefulSetSpec(a *monitoringv1.Alertmanager, config Config) (*appsv1.S
 				SecurityContext:               a.Spec.SecurityContext,
 				Tolerations:                   a.Spec.Tolerations,
 				Affinity:                      a.Spec.Affinity,
+				HostNetwork: 				   a.Spec.HostNetwork,
 			},
 		},
 	}, nil
